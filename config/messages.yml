@@ -190,16 +190,31 @@ messages:
     footer: "AI supports the storyteller."
 
 
-  showcase:
-    title: "✨ Community Showcase"
-    description: |
-      Share something you created.
 
-      Maps, NPCs, adventures, tools, Foundry scenes, campaign notes, prompts, workflows, videos, modules, and other tabletop creations are welcome.
 
-      Tell us a little about the process, not only the finished result.
 
-    footer: "Celebrate creation."
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
   ai-toolbox:
@@ -262,20 +277,6 @@ messages:
     footer: "Assist. Inspire. Step aside."
 
 
-  feature-ideas:
-    title: "💡 Feature Ideas"
-    description: |
-      Suggest tools that remove friction from running games.
-
-      Strong proposals explain:
-
-      • The GM problem
-      • When it happens
-      • How people solve it now
-      • What a better experience would feel like
-      • How the idea preserves creative control
-
-    footer: "Start with the problem."
 
 
   module-discussion:
@@ -308,40 +309,9 @@ messages:
     footer: "Clear feedback creates dependable tools."
 
 
-  bug-reports:
-    title: "🐛 Bug Reports"
-    description: |
-      Please include enough detail to reproduce the issue.
-
-      Use this format:
-
-      **Module and version:**
-      **Foundry version:**
-      **Game system and version:**
-      **Steps to reproduce:**
-      **Expected result:**
-      **Actual result:**
-      **Console error or screenshot:**
-
-      Never post passwords, API keys, tokens, or private campaign information.
-
-    footer: "Reproducible is repairable."
 
 
-  feature-requests:
-    title: "🔨 Feature Requests"
-    description: |
-      Describe the problem before describing the feature.
 
-      The most useful requests tell us:
-
-      • Who needs it
-      • What task is frustrating
-      • How often it happens
-      • What outcome would help
-      • Whether it gives the GM more time to create
-
-    footer: "Better problems create better products."
 
 
   foundry-development:
@@ -362,3 +332,69 @@ messages:
       Explain what a linked project does and why it is relevant.
 
     footer: "Collaboration compounds."  
+    
+forum_messages:
+
+  showcase:
+    title: "📌 Read Before Posting"
+    content: |
+      Welcome to the Community Showcase.
+
+      Share something you've created and tell us a little about it.
+
+      Great posts include:
+      • What you created
+      • What inspired it
+      • Tools or systems you used
+      • What you learned
+      • Screenshots or examples when useful
+
+      Finished masterpieces aren't required. Interesting experiments are welcome too.
+
+  feature-ideas:
+    title: "📌 Read Before Posting"
+    content: |
+      Have an idea for something Wolf Labs could build?
+
+      Start with the problem rather than the solution.
+
+      Helpful posts explain:
+      • What slows you down
+      • When the problem happens
+      • How you handle it today
+      • What a better experience would feel like
+
+      Our guiding question:
+
+      **Would this give the GM more time to create?**
+
+  bug-reports:
+    title: "📌 Read Before Reporting"
+    content: |
+      Thanks for helping us improve Wolf Labs tools.
+
+      Please include:
+
+      **Module/version:**
+      **Foundry version:**
+      **Game system/version:**
+      **Steps to reproduce:**
+      **Expected result:**
+      **Actual result:**
+
+      Add screenshots or console errors when useful.
+
+      Never post passwords, API keys, tokens, or private campaign information.
+
+  feature-requests:
+    title: "📌 Read Before Requesting"
+    content: |
+      Feature requests help shape Wolf Labs.
+
+      A useful request explains:
+      • Who needs it
+      • What they're trying to accomplish
+      • What currently creates friction
+      • What outcome would improve the experience
+
+      Features should support creativity rather than replace it.

@@ -21,6 +21,55 @@ MESSAGES_CONFIG_PATH = BASE_DIR / "config" / "messages.yml"
 TOKEN = os.getenv("DISCORD_BOT_TOKEN")
 GUILD_ID_RAW = os.getenv("DISCORD_GUILD_ID")
 
+async def deploy_forum_messages(
+    guild: discord.Guild,
+    config: dict[str, Any],
+) -> None:
+    for forum_name, message_spec in (
+        config.get("forum_messages", {}).items()
+    ):
+        forum = discord.utils.get(
+            guild.forums,
+            name=forum_name,
+        )
+
+        if forum is None:
+            print(f"Forum not found: {forum_name}")
+            continue
+
+        title = message_spec.get(
+            "title",
+            "📌 Read Before Posting",
+        )
+
+        content = message_spec.get(
+            "content",
+            "",
+        )
+
+        # Avoid creating another copy on every deployment.
+        existing_thread = discord.utils.get(
+            forum.threads,
+            name=title,
+        )
+
+        if existing_thread is not None:
+            print(
+                f"Forum guidance already exists: "
+                f"#{forum_name}"
+            )
+            continue
+
+        print(
+            f"Creating forum guidance in #{forum_name}"
+        )
+
+        await forum.create_thread(
+            name=title,
+            content=content,
+            reason="Wolf Labs forum guidance deployment",
+        )
+
 async def deploy_messages(
     guild: discord.Guild,
     config: dict[str, Any],
@@ -254,6 +303,15 @@ async def deploy_roles(
             reason="Wolf Labs infrastructure deployment",
         )
 
+def build_forum_tags(
+    tag_names: list[str],
+) -> list[discord.ForumTag]:
+    return [
+        discord.ForumTag(
+            name=tag_name
+        )
+        for tag_name in tag_names
+    ]
 
 async def deploy_server(
     guild: discord.Guild,
@@ -269,10 +327,12 @@ async def deploy_server(
 
         if category is None:
             print(f"Creating category: {category_name}")
+
             category = await guild.create_category(
                 category_name,
                 reason="Wolf Labs infrastructure deployment",
             )
+
         else:
             print(f"Category already exists: {category_name}")
 
@@ -292,6 +352,7 @@ async def deploy_server(
 
             if channel_type == "text":
                 print(f"Creating text channel: #{channel_name}")
+
                 await guild.create_text_channel(
                     channel_name,
                     category=category,
@@ -301,9 +362,30 @@ async def deploy_server(
 
             elif channel_type == "voice":
                 print(f"Creating voice channel: {channel_name}")
+
                 await guild.create_voice_channel(
                     channel_name,
                     category=category,
+                    reason="Wolf Labs infrastructure deployment",
+                )
+
+            elif channel_type == "forum":
+                print(f"Creating forum channel: #{channel_name}")
+
+                tag_names = channel_spec.get(
+                    "tags",
+                    [],
+                )
+
+                available_tags = build_forum_tags(
+                    tag_names
+                )
+
+                await guild.create_forum(
+                    channel_name,
+                    category=category,
+                    topic=topic,
+                    available_tags=available_tags,
                     reason="Wolf Labs infrastructure deployment",
                 )
 
@@ -340,6 +422,7 @@ class ArchitectClient(discord.Client):
             await deploy_server(guild, server_config)
             await deploy_permissions(guild, permissions_config)
             await deploy_messages(guild, messages_config)
+            await deploy_forum_messages(guild, messages_config)
 
             print("Deployment completed successfully.")
 
@@ -358,6 +441,7 @@ class ArchitectClient(discord.Client):
 
         finally:
             await self.close()
+
 
 
 async def main() -> None:

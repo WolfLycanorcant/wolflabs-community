@@ -53,8 +53,15 @@ categories:
         topic: "Practical ways to use AI while keeping the Game Master in creative control."
 
       - name: "showcase"
-        type: "text"
-        topic: "Show the Guild what you've created."
+        type: "forum"
+        topic: "Share maps, adventures, modules, workflows, campaign creations, and other tabletop work."
+        tags:
+          - "Map"
+          - "NPC"
+          - "Adventure"
+          - "Foundry"
+          - "AI Workflow"
+          - "Other"
 
 
   - name: "🧪 THE LABORATORY"
@@ -76,8 +83,15 @@ categories:
         topic: "Explore what an AI Co-GM should and should not do."
 
       - name: "feature-ideas"
-        type: "text"
+        type: "forum"
         topic: "Ideas for tools that would give Game Masters more time to create."
+        tags:
+          - "GM Workflow"
+          - "Worldbuilding"
+          - "AI"
+          - "Foundry"
+          - "Campaign Memory"
+          - "Other"
 
 
   - name: "⚒️ WOLF LABS FORGE"
@@ -95,12 +109,25 @@ categories:
         topic: "Test upcoming Wolf Labs tools and help shape their development."
 
       - name: "bug-reports"
-        type: "text"
-        topic: "Report problems with Wolf Labs tools."
+        type: "forum"
+        topic: "Report reproducible problems with Wolf Labs tools."
+        tags:
+          - "Needs Info"
+          - "Confirmed Bug"
+          - "Investigating"
+          - "Fixed"
+          - "Cannot Reproduce"
 
       - name: "feature-requests"
-        type: "text"
-        topic: "Suggest improvements and new capabilities."
+        type: "forum"
+        topic: "Suggest improvements and new capabilities for Wolf Labs tools."
+        tags:
+          - "GM Workflow"
+          - "AI"
+          - "Automation"
+          - "UI UX"
+          - "Foundry"
+          - "Campaign Memory"
 
 
   - name: "💻 BUILDERS"
