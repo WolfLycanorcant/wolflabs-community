@@ -1,0 +1,96 @@
+permission_profiles:
+
+  staff:
+    everyone:
+      view_channel: false
+
+    roles:
+      Founder:
+        view_channel: true
+        send_messages: true
+        read_message_history: true
+
+      Moderator:
+        view_channel: true
+        send_messages: true
+        read_message_history: true
+
+      Community Guide:
+        view_channel: true
+        send_messages: true
+        read_message_history: true
+
+  read_only:
+    everyone:
+      view_channel: true
+      send_messages: false
+      add_reactions: true
+
+    roles:
+      Founder:
+        send_messages: true
+        manage_messages: true
+
+      Moderator:
+        send_messages: true
+        manage_messages: true
+
+      Community Guide:
+        send_messages: true
+
+
+  community:
+    everyone:
+      view_channel: true
+      send_messages: true
+      add_reactions: true
+      read_message_history: true
+
+
+  beta:
+    everyone:
+      view_channel: false
+
+    roles:
+      Founder:
+        view_channel: true
+        send_messages: true
+
+      Moderator:
+        view_channel: true
+        send_messages: true
+
+      Developer:
+        view_channel: true
+        send_messages: true
+
+      Beta Tester:
+        view_channel: true
+        send_messages: true
+
+
+channels:
+
+  welcome:
+    profile: read_only
+
+  start-here:
+    profile: read_only
+
+  rules:
+    profile: read_only
+
+  announcements:
+    profile: read_only
+
+  releases:
+    profile: read_only
+
+  beta-testing:
+    profile: beta
+
+
+categories:
+
+  "🔒 STAFF":
+    profile: staff

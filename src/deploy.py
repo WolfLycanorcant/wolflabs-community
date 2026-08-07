@@ -9,34 +9,213 @@ from dotenv import load_dotenv
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-CONFIG_PATH = BASE_DIR / "config" / "server.yml"
+SERVER_CONFIG_PATH = BASE_DIR / "config" / "server.yml"
+ROLES_CONFIG_PATH = BASE_DIR / "config" / "roles.yml"
+
+PERMISSIONS_CONFIG_PATH = BASE_DIR / "config" / "permissions.yml"
 
 load_dotenv(BASE_DIR / ".env")
 
 TOKEN = os.getenv("DISCORD_BOT_TOKEN")
 GUILD_ID_RAW = os.getenv("DISCORD_GUILD_ID")
 
+def build_overwrite(
+    permission_spec: dict[str, bool],
+) -> discord.PermissionOverwrite:
+    overwrite = discord.PermissionOverwrite()
 
-def load_config() -> dict[str, Any]:
-    if not CONFIG_PATH.exists():
-        raise FileNotFoundError(f"Config not found: {CONFIG_PATH}")
+    for permission_name, value in permission_spec.items():
+        if not hasattr(overwrite, permission_name):
+            raise ValueError(
+                f"Unknown channel permission: {permission_name}"
+            )
 
-    with CONFIG_PATH.open("r", encoding="utf-8") as config_file:
-        config = yaml.safe_load(config_file)
+        setattr(overwrite, permission_name, bool(value))
 
-    if not isinstance(config, dict):
-        raise ValueError("server.yml must contain a YAML object.")
+    return overwrite
+    
+async def apply_permission_profile(
+    guild: discord.Guild,
+    target,
+    profile_name: str,
+    profiles: dict[str, Any],
+) -> None:
+    profile = profiles.get(profile_name)
 
-    return config
+    if profile is None:
+        print(f"Permission profile not found: {profile_name}")
+        return
+
+    overwrites = {}
+
+    everyone_spec = profile.get("everyone")
+
+    if everyone_spec:
+        overwrites[guild.default_role] = build_overwrite(
+            everyone_spec
+        )
+
+    for role_name, role_permissions in (
+        profile.get("roles", {}).items()
+    ):
+        role = discord.utils.get(
+            guild.roles,
+            name=role_name,
+        )
+
+        if role is None:
+            print(f"Role not found: {role_name}")
+            continue
+
+        overwrites[role] = build_overwrite(
+            role_permissions
+        )
+
+    print(
+        f"Applying '{profile_name}' permissions "
+        f"to {target.name}"
+    )
+
+    await target.edit(
+        overwrites=overwrites,
+        reason="Wolf Labs permissions deployment",
+    )    
+    
+async def deploy_permissions(
+    guild: discord.Guild,
+    config: dict[str, Any],
+) -> None:
+    profiles = config.get("permission_profiles", {})
+
+    # Category-level permissions
+    for category_name, category_spec in (
+        config.get("categories", {}).items()
+    ):
+        category = discord.utils.get(
+            guild.categories,
+            name=category_name,
+        )
+
+        if category is None:
+            print(
+                f"Permission category not found: "
+                f"{category_name}"
+            )
+            continue
+
+        profile_name = category_spec.get("profile")
+
+        await apply_permission_profile(
+            guild,
+            category,
+            profile_name,
+            profiles,
+        )
+
+    # Channel-level permissions
+    for channel_name, channel_spec in (
+        config.get("channels", {}).items()
+    ):
+        channel = discord.utils.get(
+            guild.channels,
+            name=channel_name,
+        )
+
+        if channel is None:
+            print(
+                f"Permission channel not found: "
+                f"{channel_name}"
+            )
+            continue
+
+        profile_name = channel_spec.get("profile")
+
+        await apply_permission_profile(
+            guild,
+            channel,
+            profile_name,
+            profiles,
+        )    
+    
+    
+  
+
+def load_yaml(path: Path) -> dict[str, Any]:
+    if not path.exists():
+        raise FileNotFoundError(f"Config not found: {path}")
+
+    with path.open("r", encoding="utf-8") as config_file:
+        data = yaml.safe_load(config_file)
+
+    if not isinstance(data, dict):
+        raise ValueError(f"{path.name} must contain a YAML object.")
+
+    return data
+
+
+def parse_color(value: str | None) -> discord.Color:
+    if not value:
+        return discord.Color.default()
+
+    cleaned = value.strip().lstrip("#")
+
+    try:
+        return discord.Color(int(cleaned, 16))
+    except ValueError as error:
+        raise ValueError(f"Invalid role color: {value}") from error
+
+
+def build_permissions(
+    permission_spec: dict[str, bool] | None,
+) -> discord.Permissions:
+    permissions = discord.Permissions.none()
+
+    for permission_name, enabled in (permission_spec or {}).items():
+        if not hasattr(permissions, permission_name):
+            raise ValueError(
+                f"Unknown Discord permission: {permission_name}"
+            )
+
+        setattr(permissions, permission_name, bool(enabled))
+
+    return permissions
+
+
+async def deploy_roles(
+    guild: discord.Guild,
+    config: dict[str, Any],
+) -> None:
+    for role_spec in config.get("roles", []):
+        role_name = role_spec["name"]
+
+        existing_role = discord.utils.get(
+            guild.roles,
+            name=role_name,
+        )
+
+        if existing_role is not None:
+            print(f"Role already exists: {role_name}")
+            continue
+
+        print(f"Creating role: {role_name}")
+
+        await guild.create_role(
+            name=role_name,
+            color=parse_color(role_spec.get("color")),
+            hoist=bool(role_spec.get("hoist", False)),
+            mentionable=bool(role_spec.get("mentionable", False)),
+            permissions=build_permissions(
+                role_spec.get("permissions")
+            ),
+            reason="Wolf Labs infrastructure deployment",
+        )
 
 
 async def deploy_server(
     guild: discord.Guild,
     config: dict[str, Any],
 ) -> None:
-    categories = config.get("categories", [])
-
-    for category_spec in categories:
+    for category_spec in config.get("categories", []):
         category_name = category_spec["name"]
 
         category = discord.utils.get(
@@ -108,14 +287,21 @@ class ArchitectClient(discord.Client):
         print(f"Deploying to: {guild.name}")
 
         try:
-            config = load_config()
-            await deploy_server(guild, config)
+            roles_config = load_yaml(ROLES_CONFIG_PATH)
+            server_config = load_yaml(SERVER_CONFIG_PATH)
+            permissions_config = load_yaml(PERMISSIONS_CONFIG_PATH)
+
+            await deploy_roles(guild, roles_config)
+            await deploy_server(guild, server_config)
+            await deploy_permissions(guild, permissions_config)
+
             print("Deployment completed successfully.")
 
         except discord.Forbidden:
             print(
                 "Discord denied an action. Confirm that the bot "
-                "has Administrator permission."
+                "has Administrator permission and sits above the "
+                "roles it needs to manage."
             )
 
         except discord.HTTPException as error:

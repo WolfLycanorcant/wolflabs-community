@@ -1,0 +1,56 @@
+roles:
+  - name: "Founder"
+    color: "#E5B567"
+    hoist: true
+    mentionable: false
+    permissions:
+      administrator: true
+
+  - name: "Moderator"
+    color: "#D46A6A"
+    hoist: true
+    mentionable: true
+    permissions:
+      manage_messages: true
+      kick_members: true
+      moderate_members: true
+      manage_threads: true
+      view_audit_log: true
+
+  - name: "Community Guide"
+    color: "#65B8A6"
+    hoist: true
+    mentionable: true
+    permissions:
+      manage_messages: true
+      manage_threads: true
+
+  - name: "Developer"
+    color: "#7289DA"
+    hoist: true
+    mentionable: true
+
+  - name: "Founding Member"
+    color: "#B48EDE"
+    hoist: true
+    mentionable: true
+
+  - name: "Beta Tester"
+    color: "#5EB6E4"
+    hoist: false
+    mentionable: true
+
+  - name: "Game Master"
+    color: "#57A773"
+    hoist: false
+    mentionable: true
+
+  - name: "Player"
+    color: "#A7B0C0"
+    hoist: false
+    mentionable: true
+
+  - name: "Member"
+    color: "#99AAB5"
+    hoist: false
+    mentionable: false

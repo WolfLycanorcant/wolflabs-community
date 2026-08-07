@@ -2,8 +2,157 @@ server:
   name: "The AI GM Guild"
 
 categories:
+
   - name: "🏰 START HERE"
     channels:
       - name: "welcome"
         type: "text"
-        topic: "Welcome to the home of AI tools for Foundry Game Masters."
+        topic: "Welcome to The AI GM Guild — where Game Masters learn to use AI to spend less time on busy work and more time creating."
+
+      - name: "start-here"
+        type: "text"
+        topic: "New to the Guild? Start here."
+
+      - name: "rules"
+        type: "text"
+        topic: "Community rules and expectations."
+
+      - name: "announcements"
+        type: "text"
+        topic: "Official Guild and Wolf Labs announcements."
+
+      - name: "introductions"
+        type: "text"
+        topic: "Introduce yourself, your games, and the worlds you love creating."
+
+
+  - name: "🎲 THE GM GUILD"
+    channels:
+      - name: "the-tavern"
+        type: "text"
+        topic: "The Guild's main gathering place for friendly tabletop conversation."
+
+      - name: "gm-discussion"
+        type: "text"
+        topic: "Talk about running games, preparation, storytelling, players, and the craft of being a GM."
+
+      - name: "worldbuilding"
+        type: "text"
+        topic: "Build worlds, factions, cultures, histories, locations, and lore together."
+
+      - name: "npc-workshop"
+        type: "text"
+        topic: "Create memorable NPCs and develop characters with other GMs."
+
+      - name: "encounter-workshop"
+        type: "text"
+        topic: "Design encounters, challenges, mysteries, and memorable situations."
+
+      - name: "ai-for-gms"
+        type: "text"
+        topic: "Practical ways to use AI while keeping the Game Master in creative control."
+
+      - name: "showcase"
+        type: "text"
+        topic: "Show the Guild what you've created."
+
+
+  - name: "🧪 THE LABORATORY"
+    channels:
+      - name: "ai-toolbox"
+        type: "text"
+        topic: "Share useful AI tools, models, services, and resources for tabletop gaming."
+
+      - name: "experiments"
+        type: "text"
+        topic: "Try unusual AI-assisted tabletop ideas and share the results."
+
+      - name: "prompts-and-workflows"
+        type: "text"
+        topic: "Share prompts and workflows that help GMs create more efficiently."
+
+      - name: "co-gm-ideas"
+        type: "text"
+        topic: "Explore what an AI Co-GM should and should not do."
+
+      - name: "feature-ideas"
+        type: "text"
+        topic: "Ideas for tools that would give Game Masters more time to create."
+
+
+  - name: "⚒️ WOLF LABS FORGE"
+    channels:
+      - name: "releases"
+        type: "text"
+        topic: "New Wolf Labs modules, tools, and releases."
+
+      - name: "module-discussion"
+        type: "text"
+        topic: "Discuss Wolf Labs Foundry VTT modules."
+
+      - name: "beta-testing"
+        type: "text"
+        topic: "Test upcoming Wolf Labs tools and help shape their development."
+
+      - name: "bug-reports"
+        type: "text"
+        topic: "Report problems with Wolf Labs tools."
+
+      - name: "feature-requests"
+        type: "text"
+        topic: "Suggest improvements and new capabilities."
+
+
+  - name: "💻 BUILDERS"
+    channels:
+      - name: "foundry-development"
+        type: "text"
+        topic: "Foundry VTT module development and technical discussion."
+
+      - name: "ai-development"
+        type: "text"
+        topic: "Building AI systems and integrations for tabletop gaming."
+
+      - name: "integrations"
+        type: "text"
+        topic: "Connect Foundry, AI providers, Discord, websites, and other tools."
+
+      - name: "github"
+        type: "text"
+        topic: "Open-source development, repositories, issues, and contributions."
+
+
+  - name: "🔊 GATHERINGS"
+    channels:
+      - name: "Tavern"
+        type: "voice"
+
+      - name: "GM Workshop"
+        type: "voice"
+
+      - name: "Playtesting"
+        type: "voice"
+
+      - name: "Dev Hangout"
+        type: "voice"
+        
+  - name: "🔒 STAFF"
+    channels:
+      - name: "staff-hall"
+        type: "text"
+        topic: "Private discussion for the Wolf Labs community team."
+
+      - name: "moderation"
+        type: "text"
+        topic: "Moderation decisions, questions, and coordination."
+
+      - name: "community-planning"
+        type: "text"
+        topic: "Plan community events, initiatives, growth, and improvements."
+
+      - name: "incidents"
+        type: "text"
+        topic: "Private record and discussion of community incidents."
+
+      - name: "staff-voice"
+        type: "voice"
