@@ -1,23 +1,51 @@
 import os
 from pathlib import Path
+from typing import Any
 
 import discord
+import yaml
 from discord import app_commands
 from discord.ext import commands
 from dotenv import load_dotenv
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+ONBOARDING_PATH = BASE_DIR / "config" / "onboarding.yml"
+
 load_dotenv(BASE_DIR / ".env")
 
 TOKEN = os.getenv("DISCORD_BOT_TOKEN")
 GUILD_ID_RAW = os.getenv("DISCORD_GUILD_ID")
 
 
+def load_yaml(path: Path) -> dict[str, Any]:
+    with path.open("r", encoding="utf-8") as file:
+        data = yaml.safe_load(file)
+
+    if not isinstance(data, dict):
+        raise ValueError(
+            f"{path.name} must contain a YAML object."
+        )
+
+    return data
+
+
+ONBOARDING_CONFIG = load_yaml(ONBOARDING_PATH)["onboarding"]
+
+
+STYLE_MAP = {
+    "primary": discord.ButtonStyle.primary,
+    "secondary": discord.ButtonStyle.secondary,
+    "success": discord.ButtonStyle.success,
+    "danger": discord.ButtonStyle.danger,
+}
+
+
 async def toggle_role(
     interaction: discord.Interaction,
     role_name: str,
 ) -> None:
+
     if interaction.guild is None:
         await interaction.response.send_message(
             "This control only works inside the Guild.",
@@ -41,13 +69,15 @@ async def toggle_role(
 
     if role is None:
         await interaction.response.send_message(
-            f"The **{role_name}** role hasn't been configured yet.",
+            f"The **{role_name}** role hasn't been configured.",
             ephemeral=True,
         )
         return
 
     try:
+
         if role in member.roles:
+
             await member.remove_roles(
                 role,
                 reason="Self-service onboarding role removal",
@@ -59,6 +89,7 @@ async def toggle_role(
             )
 
         else:
+
             await member.add_roles(
                 role,
                 reason="Self-service onboarding role selection",
@@ -70,14 +101,16 @@ async def toggle_role(
             )
 
     except discord.Forbidden:
+
         await interaction.response.send_message(
             "I can't manage that role. Make sure "
-            "**Wolf Labs Architect** is above it in the role hierarchy.",
+            "**Wolf Labs Architect** is above it.",
             ephemeral=True,
         )
 
 
 class RoleButton(discord.ui.Button):
+
     def __init__(
         self,
         *,
@@ -113,122 +146,33 @@ class RoleButton(discord.ui.Button):
 class OnboardingRolesView(discord.ui.View):
 
     def __init__(self) -> None:
+
         super().__init__(timeout=None)
 
-        # ---------------------------------
-        # ROW 0 — HOW DO YOU PLAY?
-        # ---------------------------------
+        for index, item in enumerate(
+            ONBOARDING_CONFIG.get("roles", [])
+        ):
 
-        self.add_item(
-            RoleButton(
-                label="Game Master",
-                role_name="Game Master",
-                emoji="🎲",
-                style=discord.ButtonStyle.primary,
-                custom_id="guild_role_gm",
-                row=0,
+            style_name = item.get(
+                "style",
+                "secondary",
             )
-        )
 
-        self.add_item(
-            RoleButton(
-                label="Player",
-                role_name="Player",
-                emoji="🧙",
-                style=discord.ButtonStyle.primary,
-                custom_id="guild_role_player",
-                row=0,
+            style = STYLE_MAP.get(
+                style_name,
+                discord.ButtonStyle.secondary,
             )
-        )
 
-        self.add_item(
-            RoleButton(
-                label="Developer",
-                role_name="Developer",
-                emoji="💻",
-                style=discord.ButtonStyle.primary,
-                custom_id="guild_role_developer",
-                row=0,
+            self.add_item(
+                RoleButton(
+                    label=item["label"],
+                    role_name=item["role"],
+                    emoji=item["emoji"],
+                    style=style,
+                    custom_id=f"guild_onboarding_{index}",
+                    row=int(item.get("row", 0)),
+                )
             )
-        )
-
-        # ---------------------------------
-        # ROW 1 — WHAT BRINGS YOU HERE?
-        # ---------------------------------
-
-        self.add_item(
-            RoleButton(
-                label="AI for GMing",
-                role_name="AI for GMing",
-                emoji="🤖",
-                style=discord.ButtonStyle.secondary,
-                custom_id="guild_interest_ai_gming",
-                row=1,
-            )
-        )
-
-        self.add_item(
-            RoleButton(
-                label="Worldbuilding",
-                role_name="Worldbuilding",
-                emoji="🌍",
-                style=discord.ButtonStyle.secondary,
-                custom_id="guild_interest_worldbuilding",
-                row=1,
-            )
-        )
-
-        self.add_item(
-            RoleButton(
-                label="Foundry Tools",
-                role_name="Foundry Tools",
-                emoji="🔨",
-                style=discord.ButtonStyle.secondary,
-                custom_id="guild_interest_foundry",
-                row=1,
-            )
-        )
-
-        # ---------------------------------
-        # ROW 2 — MORE INTERESTS
-        # ---------------------------------
-
-        self.add_item(
-            RoleButton(
-                label="AI Development",
-                role_name="AI Development",
-                emoji="🧠",
-                style=discord.ButtonStyle.secondary,
-                custom_id="guild_interest_ai_dev",
-                row=2,
-            )
-        )
-
-        self.add_item(
-            RoleButton(
-                label="Learning TTRPGs",
-                role_name="Learning TTRPGs",
-                emoji="📚",
-                style=discord.ButtonStyle.secondary,
-                custom_id="guild_interest_learning",
-                row=2,
-            )
-        )
-
-        # ---------------------------------
-        # ROW 3 — EARLY ACCESS
-        # ---------------------------------
-
-        self.add_item(
-            RoleButton(
-                label="Beta Tester",
-                role_name="Beta Tester",
-                emoji="🧪",
-                style=discord.ButtonStyle.success,
-                custom_id="guild_role_beta",
-                row=3,
-            )
-        )
 
 
 class ArchitectBot(commands.Bot):
@@ -245,8 +189,9 @@ class ArchitectBot(commands.Bot):
 
     async def setup_hook(self) -> None:
 
-        # Persistent onboarding controls.
-        self.add_view(OnboardingRolesView())
+        self.add_view(
+            OnboardingRolesView()
+        )
 
         if GUILD_ID_RAW and GUILD_ID_RAW.isdigit():
 
@@ -279,41 +224,23 @@ bot = ArchitectBot()
 @app_commands.checks.has_permissions(
     administrator=True
 )
+
 async def post_onboarding(
     interaction: discord.Interaction,
 ) -> None:
 
     embed = discord.Embed(
-        title="🏰 Welcome to The AI GM Guild",
-        description=(
-            "Let's personalize your place in the Guild.\n\n"
-
-            "**🎲 How do you play?**\n"
-            "Choose Game Master, Player, Developer — "
-            "or any combination that describes you.\n\n"
-
-            "**🧭 What brings you here?**\n"
-            "Choose the things you're interested in. "
-            "Pick as many as you like.\n\n"
-
-            "**🧪 Want early access?**\n"
-            "Choose Beta Tester if you'd like to help "
-            "test experimental Wolf Labs tools.\n\n"
-
-            "Clicking a selected role again removes it.\n\n"
-
-            "**There are no wrong choices.** "
-            "The Guild is here to help you explore, "
-            "create, and enjoy tabletop gaming."
-        ),
+        title=ONBOARDING_CONFIG["title"],
+        description=ONBOARDING_CONFIG["description"],
+        color=discord.Color.from_rgb(0, 127, 255),
     )
 
-    embed.set_footer(
-        text=(
-            "Every feature should give the GM "
-            "more time to create."
+    footer = ONBOARDING_CONFIG.get("footer")
+
+    if footer:
+        embed.set_footer(
+            text=footer
         )
-    )
 
     await interaction.response.send_message(
         embed=embed,
@@ -342,7 +269,114 @@ async def post_onboarding_error(
 
     raise error
 
+@bot.tree.command(
+    name="my-path",
+    description="Show recommended places in the Guild based on your roles.",
+)
+async def my_path(
+    interaction: discord.Interaction,
+) -> None:
 
+    if interaction.guild is None:
+        await interaction.response.send_message(
+            "This command only works inside the Guild.",
+            ephemeral=True,
+        )
+        return
+
+    member = interaction.user
+
+    if not isinstance(member, discord.Member):
+        await interaction.response.send_message(
+            "I couldn't identify your Guild membership.",
+            ephemeral=True,
+        )
+        return
+
+    member_roles = {
+        role.name
+        for role in member.roles
+    }
+
+    paths = ONBOARDING_CONFIG.get(
+        "paths",
+        {},
+    )
+
+    matched_paths = []
+
+    for role_name, path in paths.items():
+        if role_name in member_roles:
+            matched_paths.append(path)
+
+    if not matched_paths:
+        await interaction.response.send_message(
+            "You haven't selected any onboarding roles yet. "
+            "Visit **#start-here** and choose what interests you first.",
+            ephemeral=True,
+        )
+        return
+
+    embed = discord.Embed(
+        title="🧭 Your Guild Path",
+        description=(
+            "Based on the interests you've selected, "
+            "here are some great places to start."
+        ),
+    )
+
+    for path in matched_paths:
+
+        channel_mentions = []
+
+        for channel_name in path.get(
+            "channels",
+            [],
+        ):
+
+            channel = discord.utils.get(
+                interaction.guild.channels,
+                name=channel_name,
+            )
+
+            if channel is not None:
+                channel_mentions.append(
+                    channel.mention
+                )
+
+        channel_text = "\n".join(
+            f"→ {mention}"
+            for mention in channel_mentions
+        )
+
+        value = path.get(
+            "intro",
+            "",
+        )
+
+        if channel_text:
+            value += (
+                "\n\n"
+                + channel_text
+            )
+
+        embed.add_field(
+            name=path["title"],
+            value=value,
+            inline=False,
+        )
+
+    embed.set_footer(
+        text=(
+            "Explore at your own pace. "
+            "There is no wrong way through the Guild."
+        )
+    )
+
+    await interaction.response.send_message(
+        embed=embed,
+        ephemeral=True,
+    )
 def main() -> None:
 
     if not TOKEN:

@@ -1,0 +1,126 @@
+onboarding:
+  title: "🏰 Welcome to The AI GM Guild"
+
+  description: |
+    Let's personalize your place in the Guild.
+
+    **🎲 How do you play?**
+    Choose every role that describes you.
+
+    **🧭 What brings you here?**
+    Pick as many interests as you like.
+
+    **🧪 Want early access?**
+    Join the Beta Tester group to help shape upcoming Wolf Labs tools.
+
+    Clicking a role again removes it.
+
+    **There are no wrong choices.**
+    Explore, create, and enjoy tabletop gaming.
+
+  footer: "Every feature should give the GM more time to create."
+
+  roles:
+
+    - label: "Game Master"
+      role: "Game Master"
+      emoji: "🎲"
+      style: "primary"
+      row: 0
+
+    - label: "Player"
+      role: "Player"
+      emoji: "🧙"
+      style: "primary"
+      row: 0
+
+    - label: "Developer"
+      role: "Developer"
+      emoji: "💻"
+      style: "primary"
+      row: 0
+
+    - label: "AI for GMing"
+      role: "AI for GMing"
+      emoji: "🤖"
+      style: "secondary"
+      row: 1
+
+    - label: "Worldbuilding"
+      role: "Worldbuilding"
+      emoji: "🌍"
+      style: "secondary"
+      row: 1
+
+    - label: "Foundry Tools"
+      role: "Foundry Tools"
+      emoji: "🔨"
+      style: "secondary"
+      row: 1
+
+    - label: "AI Development"
+      role: "AI Development"
+      emoji: "🧠"
+      style: "secondary"
+      row: 2
+
+    - label: "Learning TTRPGs"
+      role: "Learning TTRPGs"
+      emoji: "📚"
+      style: "secondary"
+      row: 2
+
+    - label: "Beta Tester"
+      role: "Beta Tester"
+      emoji: "🧪"
+      style: "success"
+      row: 3
+
+  paths:
+
+    Game Master:
+      title: "🎲 Your GM Path"
+      intro: "Spend less time on busy work and more time creating."
+      channels:
+        - ai-for-gms
+        - gm-discussion
+        - worldbuilding
+
+    Player:
+      title: "🧙 Your Player Path"
+      intro: "Meet the Guild and explore what the community is creating."
+      channels:
+        - the-tavern
+        - showcase
+
+    Learning TTRPGs:
+      title: "📚 Your Beginner Path"
+      intro: "You don't need years of experience to belong here."
+      channels:
+        - the-tavern
+        - gm-discussion
+        - ai-for-gms
+
+    Foundry Tools:
+      title: "🔨 Your Foundry Path"
+      intro: "Explore tools that make running games in Foundry easier."
+      channels:
+        - module-discussion
+        - foundry-development
+        - feature-requests
+
+    AI Development:
+      title: "🧠 Your Builder Path"
+      intro: "Explore the technical frontier of AI-assisted tabletop gaming."
+      channels:
+        - ai-development
+        - experiments
+        - github
+
+    Beta Tester:
+      title: "🧪 Your Tester Path"
+      intro: "Help shape Wolf Labs tools before they're released."
+      channels:
+        - beta-testing
+        - bug-reports
+        - feature-requests
