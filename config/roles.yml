@@ -54,3 +54,28 @@ roles:
     color: "#99AAB5"
     hoist: false
     mentionable: false
+    
+  - name: "AI for GMing"
+    color: "#99AAB5"
+    hoist: false
+    mentionable: false
+
+  - name: "Worldbuilding"
+    color: "#99AAB5"
+    hoist: false
+    mentionable: false
+
+  - name: "Foundry Tools"
+    color: "#99AAB5"
+    hoist: false
+    mentionable: false
+
+  - name: "AI Development"
+    color: "#99AAB5"
+    hoist: false
+    mentionable: false
+
+  - name: "Learning TTRPGs"
+    color: "#99AAB5"
+    hoist: false
+    mentionable: false
