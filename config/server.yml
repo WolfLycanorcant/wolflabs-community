@@ -1,0 +1,9 @@
+server:
+  name: "The AI GM Guild"
+
+categories:
+  - name: "🏰 START HERE"
+    channels:
+      - name: "welcome"
+        type: "text"
+        topic: "Welcome to the home of AI tools for Foundry Game Masters."
