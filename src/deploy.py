@@ -16,8 +16,52 @@ PERMISSIONS_CONFIG_PATH = BASE_DIR / "config" / "permissions.yml"
 
 load_dotenv(BASE_DIR / ".env")
 
+MESSAGES_CONFIG_PATH = BASE_DIR / "config" / "messages.yml"
+
 TOKEN = os.getenv("DISCORD_BOT_TOKEN")
 GUILD_ID_RAW = os.getenv("DISCORD_GUILD_ID")
+
+async def deploy_messages(
+    guild: discord.Guild,
+    config: dict[str, Any],
+) -> None:
+    for channel_name, message_spec in (
+        config.get("messages", {}).items()
+    ):
+        channel = discord.utils.get(
+            guild.text_channels,
+            name=channel_name,
+        )
+
+        if channel is None:
+            print(f"Message channel not found: {channel_name}")
+            continue
+
+        title = message_spec.get("title")
+        description = message_spec.get("description")
+        footer = message_spec.get("footer")
+
+        embed = discord.Embed(
+            title=title,
+            description=description,
+        )
+
+        if footer:
+            embed.set_footer(text=footer)
+
+        existing_message = None
+
+        async for message in channel.history(limit=50):
+            if message.author == guild.me and message.embeds:
+                existing_message = message
+                break
+
+        if existing_message:
+            print(f"Updating message in #{channel_name}")
+            await existing_message.edit(embed=embed)
+        else:
+            print(f"Publishing message in #{channel_name}")
+            await channel.send(embed=embed)
 
 def build_overwrite(
     permission_spec: dict[str, bool],
@@ -290,10 +334,12 @@ class ArchitectClient(discord.Client):
             roles_config = load_yaml(ROLES_CONFIG_PATH)
             server_config = load_yaml(SERVER_CONFIG_PATH)
             permissions_config = load_yaml(PERMISSIONS_CONFIG_PATH)
+            messages_config = load_yaml(MESSAGES_CONFIG_PATH)
 
             await deploy_roles(guild, roles_config)
             await deploy_server(guild, server_config)
             await deploy_permissions(guild, permissions_config)
+            await deploy_messages(guild, messages_config)
 
             print("Deployment completed successfully.")
 

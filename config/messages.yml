@@ -1,0 +1,364 @@
+messages:
+
+  welcome:
+    title: "🏰 Welcome to The AI GM Guild"
+    description: |
+      Welcome to a community for Game Masters exploring how AI can make tabletop roleplaying easier, richer, and more fun.
+
+      We believe AI should support creativity — not replace it.
+
+      The goal is simple:
+
+      **Spend less time on busy work. Spend more time creating.**
+
+      Whether you're an experienced GM or you're wondering if you could run your first game, you're welcome here.
+
+    footer: "Powered by Wolf Labs"
+
+
+  start-here:
+    title: "🎲 Start Your Adventure"
+    description: |
+      New to the Guild? You're in the right place.
+
+      **1. Read #rules**
+      A few simple expectations keep the Guild welcoming and useful.
+
+      **2. Introduce yourself in #introductions**
+      Tell us what you play, what you run, or what you'd like to try.
+
+      **3. Visit #ai-for-gms**
+      See practical ways AI can reduce preparation without taking creative control away from you.
+
+      **4. Explore #worldbuilding**
+      Bring an idea, even if it's unfinished. Especially if it's unfinished.
+
+      **5. Visit #the-tavern**
+      Meet the community.
+
+      You don't need to be an AI expert.
+
+      You don't even need to be an experienced Game Master.
+
+      Curiosity is enough to start.
+
+    footer: "Every great campaign starts somewhere."
+
+
+  rules:
+    title: "📜 Guild Rules"
+    description: |
+      **1. Be welcoming.**
+      Help make this a place where new and experienced players feel comfortable participating.
+
+      **2. Critique ideas, not people.**
+      Thoughtful disagreement is welcome. Personal attacks are not.
+
+      **3. Help people create.**
+      Share knowledge, inspiration, workflows, and constructive feedback.
+
+      **4. Respect creative ownership.**
+      Don't present another person's work as your own.
+
+      **5. Don't spam or aggressively self-promote.**
+      Sharing relevant work is encouraged. Treating the Guild like an advertising feed isn't.
+
+      **6. Keep conversations appropriate for the community.**
+      This is primarily a tabletop gaming and creative technology community.
+
+      **7. Respect the table.**
+      Different groups enjoy different systems, styles, settings, and approaches to AI.
+
+      **8. The GM remains the creator.**
+      We use AI to remove friction and inspire creativity — not to tell people how their stories should be told.
+
+      Above all:
+
+      **Help make people excited to play another game.**
+
+    footer: "The AI GM Guild • Community Guidelines"
+
+
+  announcements:
+    title: "📢 Guild Announcements"
+    description: |
+      Official announcements from The AI GM Guild and Wolf Labs will appear here.
+
+      Watch this channel for new tools, community events, major updates, beta opportunities, and releases.
+
+    footer: "Wolf Labs"
+
+
+  releases:
+    title: "⚒️ The Wolf Labs Forge"
+    description: |
+      New Wolf Labs tools and Foundry VTT modules will be announced here.
+
+      Our product principle is simple:
+
+      **Every feature should give the GM more time to create.**
+
+    footer: "Built for Game Masters."
+    
+    introductions:
+    title: "👋 Introduce Yourself"
+    description: |
+      Tell us a little about yourself.
+
+      You might include:
+
+      • What games or systems you enjoy
+      • Whether you are a GM, player, or both
+      • What kind of worlds you like creating
+      • How you currently use AI, if at all
+      • What you hope to learn or build here
+
+      New to tabletop roleplaying? Say that too. You are absolutely welcome here.
+
+    footer: "Every storyteller starts somewhere."
+
+
+  the-tavern:
+    title: "🍻 Welcome to the Tavern"
+    description: |
+      This is the Guild's main gathering place.
+
+      Talk about your campaigns, strange player choices, favorite systems, great sessions, amusing disasters, and anything else connected to tabletop gaming.
+
+      Keep it friendly, welcoming, and fun.
+
+    footer: "Pull up a chair."
+
+
+  worldbuilding:
+    title: "🌍 Worldbuilding Workshop"
+    description: |
+      Bring your unfinished ideas here.
+
+      Share locations, cultures, factions, histories, religions, conflicts, mysteries, and strange corners of your world.
+
+      You do not need a polished setting document.
+
+      A sentence, sketch, question, or half-formed idea is enough.
+
+    footer: "Inspiration grows through conversation."
+
+
+  npc-workshop:
+    title: "🎭 NPC Workshop"
+    description: |
+      Build memorable characters together.
+
+      Share an NPC concept, ask for help improving one, test motivations, create relationships, or explore how an NPC might react to player choices.
+
+      AI should help you discover possibilities — not flatten every character into the same template.
+
+    footer: "Give every character a reason to matter."
+
+
+  encounter-workshop:
+    title: "⚔️ Encounter Workshop"
+    description: |
+      Design more than balanced combat.
+
+      Use this space for social encounters, mysteries, hazards, exploration challenges, puzzles, tense negotiations, and memorable battles.
+
+      Good encounters create meaningful choices.
+
+    footer: "Make the players' decisions matter."
+
+
+  ai-for-gms:
+    title: "🤖 AI for Game Masters"
+    description: |
+      Share practical ways AI can reduce preparation and support play.
+
+      Great topics include:
+
+      • Session preparation
+      • Improvisation support
+      • Campaign organization
+      • Summaries and notes
+      • NPC and location variations
+      • Rules lookup workflows
+      • Campaign continuity
+
+      Our guiding principle:
+
+      **Every feature should give the GM more time to create.**
+
+    footer: "AI supports the storyteller."
+
+
+  showcase:
+    title: "✨ Community Showcase"
+    description: |
+      Share something you created.
+
+      Maps, NPCs, adventures, tools, Foundry scenes, campaign notes, prompts, workflows, videos, modules, and other tabletop creations are welcome.
+
+      Tell us a little about the process, not only the finished result.
+
+    footer: "Celebrate creation."
+
+
+  ai-toolbox:
+    title: "🧰 AI Toolbox"
+    description: |
+      Share useful AI models, applications, services, plugins, and workflows for tabletop gaming.
+
+      When recommending something, explain:
+
+      • What it does
+      • Who it helps
+      • Whether it is free or paid
+      • Whether it runs locally or in the cloud
+      • Any important limitations
+
+    footer: "Useful beats fashionable."
+
+
+  experiments:
+    title: "🧪 The Experimental Chamber"
+    description: |
+      Try unusual ideas here.
+
+      Test new workflows, strange agent concepts, multimodal tools, voice systems, campaign-memory experiments, and prototypes that are not ready for ordinary use.
+
+      Failure is useful when we explain what we learned.
+
+    footer: "Experiment boldly. Report honestly."
+
+
+  prompts-and-workflows:
+    title: "🧠 Prompts and Workflows"
+    description: |
+      Share prompts that worked, but include enough context for others to understand why.
+
+      Helpful posts explain:
+
+      • The goal
+      • The model or tool used
+      • The input
+      • The useful result
+      • What still needed human judgment
+
+      A good workflow is usually more valuable than one magical prompt.
+
+    footer: "Share methods, not mysteries."
+
+
+  co-gm-ideas:
+    title: "🎲 Designing the AI Co-GM"
+    description: |
+      What should an AI Co-GM do?
+
+      What should it never do?
+
+      Discuss campaign memory, inspiration, preparation, continuity, improvisation, player experience, privacy, local models, and the boundaries of automation.
+
+      The GM remains the creator and final authority.
+
+    footer: "Assist. Inspire. Step aside."
+
+
+  feature-ideas:
+    title: "💡 Feature Ideas"
+    description: |
+      Suggest tools that remove friction from running games.
+
+      Strong proposals explain:
+
+      • The GM problem
+      • When it happens
+      • How people solve it now
+      • What a better experience would feel like
+      • How the idea preserves creative control
+
+    footer: "Start with the problem."
+
+
+  module-discussion:
+    title: "🧩 Module Discussion"
+    description: |
+      Discuss Wolf Labs Foundry VTT modules here.
+
+      Share use cases, questions, workflows, compatibility notes, and ideas for improvement.
+
+      For a confirmed defect, use #bug-reports.
+
+    footer: "Build better tools together."
+
+
+  beta-testing:
+    title: "🧪 Beta Testing"
+    description: |
+      This area is for early builds and structured feedback.
+
+      When testing, please include:
+
+      • Foundry version
+      • Game system and version
+      • Module version
+      • What you attempted
+      • What happened
+      • What you expected
+      • Screenshots or console errors when relevant
+
+    footer: "Clear feedback creates dependable tools."
+
+
+  bug-reports:
+    title: "🐛 Bug Reports"
+    description: |
+      Please include enough detail to reproduce the issue.
+
+      Use this format:
+
+      **Module and version:**
+      **Foundry version:**
+      **Game system and version:**
+      **Steps to reproduce:**
+      **Expected result:**
+      **Actual result:**
+      **Console error or screenshot:**
+
+      Never post passwords, API keys, tokens, or private campaign information.
+
+    footer: "Reproducible is repairable."
+
+
+  feature-requests:
+    title: "🔨 Feature Requests"
+    description: |
+      Describe the problem before describing the feature.
+
+      The most useful requests tell us:
+
+      • Who needs it
+      • What task is frustrating
+      • How often it happens
+      • What outcome would help
+      • Whether it gives the GM more time to create
+
+    footer: "Better problems create better products."
+
+
+  foundry-development:
+    title: "💻 Foundry Development"
+    description: |
+      Discuss Foundry VTT module development, APIs, hooks, application design, compatibility, packaging, and release practices.
+
+      Be generous with explanations. Many talented builders begin by asking basic questions.
+
+    footer: "Teach what you learn."
+
+
+  github:
+    title: "🐙 GitHub and Open Source"
+    description: |
+      Share repositories, issues, pull requests, release notes, contribution opportunities, and open-source development updates.
+
+      Explain what a linked project does and why it is relevant.
+
+    footer: "Collaboration compounds."  
